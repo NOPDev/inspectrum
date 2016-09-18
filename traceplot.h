@@ -47,3 +47,12 @@ private:
 	void drawTile(QString key, const QRect &rect, range_t<off_t> sampleRange);
 	void plotTrace(QPainter &painter, const QRect &rect, float *samples, off_t count, int step);
 };
+
+class TracePlotWrapper : public QObject {
+	Q_OBJECT
+public Q_SLOTS:
+	TracePlot* new_TracePlot(std::shared_ptr<AbstractSampleSource> source) { return  new TracePlot(source); };
+	void delete_TracePlot(TracePlot* o) { delete o; };
+	std::shared_ptr<AbstractSampleSource> source(TracePlot *o) { return o->source(); };
+
+};

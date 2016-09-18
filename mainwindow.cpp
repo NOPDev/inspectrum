@@ -20,6 +20,10 @@
 #include <QtWidgets>
 #include <QRubberBand>
 #include <sstream>
+#include <complex>
+#include <PythonQt.h>
+#include <gui/PythonQtScriptingConsole.h>
+
 
 #include "mainwindow.h"
 #include "util.h"
@@ -30,8 +34,13 @@ MainWindow::MainWindow()
 
     dock = new SpectrogramControls(tr("Controls"), this);
     dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    addDockWidget(Qt::LeftDockWidgetArea, dock);
 
+    addDockWidget(Qt::LeftDockWidgetArea, dock);
+//    PythonQt::self()->registerClass(&SpectrogramControls::staticMetaObject, "SpectrogramControls");
+//    ctx.addObject("controls", dock);
+
+//    qRegisterMetaType<SpectrogramControls>("SpectrogramControls");
+//    PythonQt::self()->registerCPPClass("SpectrogramControls", "", "derp", PythonQtCreateObject<SpectrogramControls>);
     input = new InputSource();
 
     plots = new PlotView(input);
@@ -87,9 +96,15 @@ void MainWindow::setSampleRate(QString rate)
 {
     input->setSampleRate(rate.toInt());
     plots->setSampleRate(rate.toInt());
+    this->setSampleRate(rate.toInt());
 }
 
 void MainWindow::setSampleRate(int rate)
 {
     dock->sampleRate->setText(QString::number(rate));
+}
+
+QSize MainWindow::sizeHint() const {
+    return QSize(1200, 700);
+    return QWidget::sizeHint();
 }

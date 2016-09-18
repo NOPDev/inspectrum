@@ -54,12 +54,15 @@ INCLUDE(FindPkgConfig)
 find_package(Qt5Widgets REQUIRED)
 pkg_check_modules(FFTW REQUIRED fftw3f)
 find_package(Liquid REQUIRED)
+find_package(PythonLibs REQUIRED)
 
 include_directories(
     ${QT_INCLUDES}
     ${FFTW_INCLUDEDIR}
     ${FFTW_INCLUDE_DIRS}
     ${LIQUID_INCLUDES}
+	${PYTHON_INCLUDE_DIRS}
+	/usr/include/PythonQt
 )
 
 link_directories(
@@ -73,12 +76,16 @@ target_link_libraries(inspectrum
     ${QT_LIBRARIES}
     ${FFTW_LIBRARIES}
     ${LIQUID_LIBRARIES}
+    ${PYTHON_LIBRARIES}
+	PythonQt
+    PythonQt_QtAll
     ${extraLibs}
 )
 set(INSTALL_DEFAULT_BINDIR "bin" CACHE STRING "Appended to CMAKE_INSTALL_PREFIX")
+set(INSTALL_DEFAULT_SHAREDIR "share/inspectrum" CACHE STRING "Appended to CMAKE_INSTALL_PREFIX")
 
 install(TARGETS inspectrum RUNTIME DESTINATION ${INSTALL_DEFAULT_BINDIR})
-
+install(DIRECTORY python/ DESTINATION ${INSTALL_DEFAULT_SHAREDIR}/python)
 # Create uninstall target
 configure_file(
     ${PROJECT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in

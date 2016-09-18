@@ -23,6 +23,9 @@
 #include <QScrollArea>
 #include "spectrogramcontrols.h"
 #include "plotview.h"
+#include "plots.h"
+#include "plot.h"
+
 
 class MainWindow : public QMainWindow
 {
@@ -30,15 +33,19 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
-    void changeSampleRate(int rate);
+    PlotView *plots;
+    virtual QSize sizeHint() const override;
 
 public slots:
     void openFile(QString fileName);
     void setSampleRate(QString rate);
     void setSampleRate(int rate);
+    std::vector<PlotPtr> getPlots() const { return plots->getPlots(); };
+    std::vector<float> symbols(PlotPtr *plot) { return plots->getSymbols((*plot)->output()); };
+    void addDock(QDockWidget *dockWidget) { this->addDockWidget(Qt::DockWidgetArea::BottomDockWidgetArea, dockWidget); }
 
 private:
     SpectrogramControls *dock;
-    PlotView *plots;
     InputSource *input;
+
 };

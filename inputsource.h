@@ -20,8 +20,11 @@
 
 #pragma once
 
+#include <PythonQt.h>
 #include <complex>
+#include <QtCore/QObject>
 #include "samplesource.h"
+#include "plot.h"
 
 class SampleAdapter {
 public:
@@ -50,4 +53,18 @@ public:
     };
     void setSampleRate(off_t rate);
     off_t rate();
+};
+
+
+class InputSourceWrapper : public QObject {
+    Q_OBJECT
+public Q_SLOTS:
+    InputSource* new_InputSource() { return new InputSource(); };
+    void delete_InputSource(InputSource *obj) { delete obj; };
+    void openFile(InputSource *o, const char *filename) { o->openFile(filename); };
+    void setSampleRate(InputSource *o, size_t rate) { o->setSampleRate(rate); };
+    size_t rate(InputSource *o) { o->rate(); };
+
+//    std::vector<float> static_Plot_getSamples(Plot* obj, int index) { return std::vector<float>() = {1,2,3} ;}
+
 };

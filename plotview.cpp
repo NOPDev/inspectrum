@@ -404,3 +404,22 @@ void PlotView::enableTimeScale(bool enabled)
     viewport()->update();
 }
 
+std::vector<float> PlotView::getSymbols(std::shared_ptr<AbstractSampleSource> src) {
+    auto symbols = std::vector<float>();
+
+    if (!cursorsEnabled)
+        return symbols;
+    auto floatSrc = std::dynamic_pointer_cast<SampleSource<float>>(src);
+    if (!floatSrc)
+        return symbols;
+
+    auto samples = floatSrc->getSamples(selectedSamples.minimum, selectedSamples.length());
+    auto step = (float)selectedSamples.length() / cursors.segments();
+    for (auto i = step / 2; i < selectedSamples.length(); i += step)
+    {
+        symbols.push_back(samples[i]);
+    }
+
+    return symbols;
+}
+

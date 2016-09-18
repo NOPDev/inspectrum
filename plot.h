@@ -25,6 +25,7 @@
 #include "abstractsamplesource.h"
 #include "util.h"
 
+
 class Plot : public QObject
 {
 	Q_OBJECT
@@ -49,4 +50,14 @@ protected:
 private:
     // TODO: don't hardcode this
     int _height = 200;
+};
+
+typedef std::shared_ptr<Plot> PlotPtr;
+
+class PlotWrapper : public QObject {
+    Q_OBJECT
+public Q_SLOTS:
+    PlotPtr new_Plot(std::shared_ptr<AbstractSampleSource> src) { return PlotPtr(new Plot(src)); };
+//    void delete_Plot(std::shared_ptr<Plot> *o) { };
+    std::shared_ptr<AbstractSampleSource> output(PlotPtr *o) { return (*o)->output(); };
 };

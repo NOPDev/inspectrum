@@ -36,6 +36,8 @@ class PlotView : public QAbstractScrollArea, Subscriber
 public:
     PlotView(InputSource *input);
     void setSampleRate(off_t rate);
+    std::vector<std::shared_ptr<Plot>> getPlots() { return plots; }
+
 
 signals:
     void timeSelectionChanged(float time);
@@ -52,6 +54,7 @@ public slots:
     void setFFTAndZoom(int fftSize, int zoomLevel);
     void setPowerMin(int power);
     void setPowerMax(int power);
+    std::vector<float> getSymbols(std::shared_ptr<AbstractSampleSource> src);
 
 protected:
     void contextMenuEvent(QContextMenuEvent * event) override;
@@ -64,7 +67,7 @@ private:
     Cursors cursors;
     SampleSource<std::complex<float>> *mainSampleSource = nullptr;
     SpectrogramPlot *spectrogramPlot = nullptr;
-    std::vector<std::unique_ptr<Plot>> plots;
+    std::vector<std::shared_ptr<Plot>> plots;
     range_t<off_t> viewRange;
     range_t<off_t> selectedSamples;
     std::pair<float, float> selectionFreq;
@@ -84,4 +87,5 @@ private:
     off_t samplesPerLine();
     void updateView(bool reCenter = false);
     void paintTimeScale(QPainter &painter, QRect &rect, range_t<off_t> sampleRange);
+
 };

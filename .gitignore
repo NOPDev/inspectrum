@@ -1,2 +1,4 @@
 # Build outputs
 build/
+.idea/
+**/__pycache__/

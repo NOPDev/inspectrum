@@ -19,6 +19,9 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <PythonQt.h>
+#include <gui/PythonQtScriptingConsole.h>
+#include <PythonQtConversion.h>
 
 #include "mainwindow.h"
 
@@ -56,7 +59,27 @@ int main(int argc, char *argv[])
         }
         mainWin.setSampleRate(rate);
     }
+    PythonQt::init(PythonQt::RedirectStdOut);
+    PythonQtObjectPtr ctx = PythonQt::self()->getMainModule();
+    PythonQtScriptingConsole console(NULL, ctx);
 
+    PythonQtRegisterListTemplateConverterForKnownClass(std::vector, PlotPtr);
+
+    PythonQt::self()->addDecorators(new InputSourceWrapper());
+    PythonQt::self()->addDecorators(new TracePlotWrapper());
+
+    PythonQt::priv()->registerCPPClass("InputSource", "", "inspectrum", PythonQtCreateObject<InputSourceWrapper>);
+    PythonQt::priv()->registerCPPClass("TracePlot", "", "inspectrum", PythonQtCreateObject<TracePlotWrapper>);
+    PythonQt::priv()->registerCPPClass("PlotPtr", "", "inspectrum", PythonQtCreateObject<PlotWrapper>);
+
+    PythonQt::self()->registerClass(&MainWindow::staticMetaObject, "inspectrum");
+
+    qRegisterMetaType<std::shared_ptr<AbstractSampleSource> >("std::shared_ptr<AbstractSampleSource>");
+
+    ctx.addObject("app", &a);
+    ctx.addObject("main", &mainWin);
+    ctx.evalFile("/usr/share/inspectrum/python/init.py");
     mainWin.show();
+
     return a.exec();
 }
