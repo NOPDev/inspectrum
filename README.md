@@ -25,13 +25,14 @@ A tool for analysing captured signals, primarily from software-defined radio rec
 ### Building on Debian-based distros
   For now the build process is a bit convoluted and has yet to be fully documented. If you wish to build the source on ubuntu it is recommended that you use `apt-get source pyinspectrum`
     
+ ```   
   sudo apt-get install qt5-default libfftw3-dev cmake pkg-config <TBD>
   mkdir build
   cd build
   cmake ..
   make
   sudo make install
-
+ ```
 ### Run
 
     ./inspectrum
