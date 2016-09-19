@@ -1,7 +1,7 @@
 # pyinspectrum - a fork of inspectrum
 A tool for analysing captured signals, primarily from software-defined radio receivers that implements an ipython console and bindings for analyzing symbols on the fly.
 
-![pyinspectrum screenshot](/screenshot.jpg)
+![pyinspectrum screenshot](https://raw.githubusercontent.com/defunctio/defunctio.github.io/master/inspectrum-screenshot.png)
 
 ## Try it
 ### Prerequisites
