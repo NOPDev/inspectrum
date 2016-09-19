@@ -1,7 +1,7 @@
-# inspectrum
-inspectrum is a tool for analysing captured signals, primarily from software-defined radio receivers.
+# pyinspectrum - a fork of inspectrum
+A tool for analysing captured signals, primarily from software-defined radio receivers that implements an ipython console and bindings for analyzing symbols on the fly.
 
-![inspectrum screenshot](/screenshot.jpg)
+![pyinspectrum screenshot](/screenshot.jpg)
 
 ## Try it
 ### Prerequisites
@@ -11,34 +11,26 @@ inspectrum is a tool for analysing captured signals, primarily from software-def
  * [liquid-dsp](https://github.com/jgaeddert/liquid-dsp)
  * pkg-config
  * qt5
+ * python3
+ * qtconsole
+ * 
+ 
+### Ubuntu 16.04
+  The recommended way to test pyinspectrum is to use the [pyinspectrum PPA](https://launchpad.net/~defunctio/+archive/ubuntu/inspectrum).
+  ```
+  sudo add-apt-repository ppa:defunctio/inspectrum
+  sudo apt-get update
+  ```
 
 ### Building on Debian-based distros
-
-    sudo apt-get install qt5-default libfftw3-dev cmake pkg-config
-    mkdir build
-    cd build
-    cmake ..
-    make
-    sudo make install
-
-
-## Building on OSX - Homebrew
-
-    brew install qt5 fftw cmake pkg-config
-    mkdir build
-    cd build
-    CMAKE_PREFIX_PATH=$(brew --prefix qt5)/lib/cmake cmake ..
-    make install
-
-## Building on OSX - Macports
-
-    sudo port install fftw-3-single cmake pkgconfig qt5
-    mkdir build
-    cd build
-    cmake ..
-    make
-    sudo make install
-
+  For now the build process is a bit convoluted and has yet to be fully documented. If you wish to build the source on ubuntu it is recommended that you use `apt-get source pyinspectrum`
+    
+  sudo apt-get install qt5-default libfftw3-dev cmake pkg-config <TBD>
+  mkdir build
+  cd build
+  cmake ..
+  make
+  sudo make install
 
 ### Run
 
