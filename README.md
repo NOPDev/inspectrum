@@ -25,7 +25,7 @@ A tool for analysing captured signals, primarily from software-defined radio rec
   ```
 
 ### Building on Debian-based distros
-  For now the build process is a bit convoluted and has yet to be fully documented. If you wish to build the source on ubuntu it is recommended that you use `apt-get source pyinspectrum`
+  For now the build process has yet to be fully documented but this should be somewhat close... If you wish to build the source on ubuntu it is recommended that you use `apt-get source pyinspectrum`
     
  ```   
   sudo apt-get install qt5-default libfftw3-dev cmake pkg-config python3-dev python3-pip python3 python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtmultimedia python3-pyqt5.qtwebkit
